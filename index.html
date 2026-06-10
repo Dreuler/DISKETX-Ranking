@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>DISKETX Ranking</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISKETX - Global Ranking</title>
+    <style>
+        body {
+            background-color: #0d0221;
+            color: #00f2ff;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff00ff;
+            text-shadow: 2px 2px #5a005a, 0 0 15px #ff00ff;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        /* Estilos obligatorios para la tabla de Dreamlo */
+        .dreamloLBTable {
+            border-collapse: collapse;
+            margin: 0 auto;
+            min-width: 300px;
+            font-size: 1.5em;
+        }
+        .dreamloLBTable th {
+            border-bottom: 3px solid #00f2ff;
+            padding: 10px;
+            color: #ffff00;
+            text-transform: uppercase;
+        }
+        .dreamloLBTable td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.3);
+        }
+        tr:hover {
+            background-color: rgba(255, 0, 255, 0.1);
+        }
+    </style>
 </head>
 <body>
 
-<h1>🏆 DISKETX LEADERBOARD 🏆</h1>
+    <h1>DISKETX RANKING</h1>
+    
+    <div class="container">
+        <!-- El script de Dreamlo generará la tabla automáticamente aquí -->
+        <script src="https://www.dreamlo.com/lb/6a289edc8f40bb17b0957876/js"></script>
+    </div>
 
-<table id="tabla">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Jugador</th>
-            <th>Puntos</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-<script>
-
-function cargarRanking(){
-
-    fetch("http://dreamlo.com/lb/6a289edc8f40bb17b0957876/json")
-    .then(r => r.json())
-    .then(data => {
-
-        const tbody = document.querySelector("#tabla tbody");
-
-        tbody.innerHTML = "";
-
-        let jugadores = data.dreamlo.leaderboard.entry;
-
-        if(!Array.isArray(jugadores))
-            jugadores = [jugadores];
-
-        jugadores.forEach((j,index)=>{
-
-            tbody.innerHTML += `
-            <tr>
-                <td>${index+1}</td>
-                <td>${j.name}</td>
-                <td>${j.score}</td>
-            </tr>`;
-        });
-
-    });
-
-}
-
-cargarRanking();
-setInterval(cargarRanking,30000);
-
-</script>
+    <p style="margin-top: 40px; color: #555;">&copy; 2025 Neo Corp - DisketX Project</p>
 
 </body>
 </html>
