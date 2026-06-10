@@ -1,15 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>DISKETX Ranking</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISKETX</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>🏆 DISKETX LEADERBOARD 🏆</h1>
+<div class="hero">
 
-    <script src="https://dreamlo.com/lb/6a289edc8f40bb17b0957876/js"></script>
+    <h1>DISKETX</h1>
+    <p class="subtitle">
+        Sobrevive, recolecta monedas y alcanza el puesto #1
+    </p>
+
+</div>
+
+<div class="panel">
+
+    <h2>🏆 Ranking Global</h2>
+
+    <table id="tabla">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th>Puntos</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script>
+
+fetch("https://dreamlo.com/lb/6a289edc8f40bb17b0957876/json")
+.then(response => response.json())
+.then(data => {
+
+    const tbody = document.querySelector("#tabla tbody");
+
+    let players = data.dreamlo.leaderboard.entry;
+
+    if(!Array.isArray(players))
+        players = [players];
+
+    players.forEach((player,index)=>{
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index+1}</td>
+            <td>${player.name}</td>
+            <td>${player.score}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+
+});
+
+</script>
 
 </body>
 </html>
