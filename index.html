@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DISKETX Ranking</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -23,36 +22,37 @@
 
 <script>
 
-const datos = {
-"dreamlo":{
-    "leaderboard":{
-        "entry":[
-            {"name":"DAR","score":"320"},
-            {"name":"VVLLO","score":"320"},
-            {"name":"NYGC","score":"110"},
-            {"name":"Player","score":"30"},
-            {"name":"BBGOLD","score":"20"},
-            {"name":"YY","score":"20"}
-        ]
-    }
+function cargarRanking(){
+
+    fetch("https://dreamlo.com/lb/6a289edc8f40bb17b0957876/json")
+    .then(r => r.json())
+    .then(data => {
+
+        const tbody = document.querySelector("#tabla tbody");
+
+        tbody.innerHTML = "";
+
+        let jugadores = data.dreamlo.leaderboard.entry;
+
+        if(!Array.isArray(jugadores))
+            jugadores = [jugadores];
+
+        jugadores.forEach((j,index)=>{
+
+            tbody.innerHTML += `
+            <tr>
+                <td>${index+1}</td>
+                <td>${j.name}</td>
+                <td>${j.score}</td>
+            </tr>`;
+        });
+
+    });
+
 }
-};
 
-const tbody = document.querySelector("#tabla tbody");
-
-datos.dreamlo.leaderboard.entry.forEach((player,index)=>{
-
-    const fila = document.createElement("tr");
-
-    fila.innerHTML = `
-        <td>${index+1}</td>
-        <td>${player.name}</td>
-        <td>${player.score}</td>
-    `;
-
-    tbody.appendChild(fila);
-
-});
+cargarRanking();
+setInterval(cargarRanking,30000);
 
 </script>
 
